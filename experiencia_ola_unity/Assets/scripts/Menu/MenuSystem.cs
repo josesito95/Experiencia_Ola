@@ -1,18 +1,39 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
-public class NewBehaviourScript : MonoBehaviour
+public class MenuManager : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public Button comenzar;
+    public Button acercaDe;
+    public Button creditos;
+    public Button salir;
+
     void Start()
     {
-        
+        comenzar.onClick.AddListener(StartGame);
+        acercaDe.onClick.AddListener(ShowAbout);
+        creditos.onClick.AddListener(ShowCredits);
+        salir.onClick.AddListener(ExitGame);
     }
 
-    // Update is called once per frame
-    void Update()
+    void StartGame()
     {
-        
+        SceneManager.LoadScene("GameScene"); // Cambia "GameScene" por el nombre de tu escena principal
+    }
+
+    void ShowAbout()
+    {
+        SceneManager.LoadScene("AboutScene"); // Escena de información sobre OLA
+    }
+
+    void ShowCredits()
+    {
+        SceneManager.LoadScene("CreditsScene"); // Escena de créditos
+    }
+
+    void ExitGame()
+    {
+        Application.Quit();
     }
 }

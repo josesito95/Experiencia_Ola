@@ -8,10 +8,11 @@ public class MenuController : MonoBehaviour
 
     public GameObject[] canvases; // Canvas de O, L, A
     private int currentIndex = 0;
+    private bool isMoving = false; // Para evitar múltiples clics durante el movimiento
 
     void Start()
     {
-        // Asegurar que solo el primer Canvas esté activo
+        // Solo el primer canvas está activo al iniciar
         for (int i = 0; i < canvases.Length; i++)
         {
             canvases[i].SetActive(i == 0);
@@ -20,20 +21,25 @@ public class MenuController : MonoBehaviour
 
     public void MoveToNextLetter()
     {
-        if (currentIndex < letterPositions.Length - 1)
-        {
-            int nextIndex = currentIndex + 1;
+        if (isMoving || currentIndex >= letterPositions.Length - 1)
+            return;
 
-            // Activamos el siguiente Canvas antes de mover la cámara
-            canvases[nextIndex].SetActive(true);
+        isMoving = true;
 
-            // Mover la cámara y luego desactivar el Canvas anterior
-            LeanTween.move(mainCamera.gameObject, letterPositions[nextIndex].position, moveDuration)
-                .setEase(LeanTweenType.easeInOutCubic)
-                .setOnComplete(() => {
-                    canvases[currentIndex].SetActive(false); // Ahora desactivamos el Canvas anterior
-                    currentIndex = nextIndex; // Actualizamos el índice
-                });
-        }
+        int nextIndex = currentIndex + 1;
+
+        // Desactivamos el canvas actual antes de mover
+        canvases[currentIndex].SetActive(false);
+
+        // Movemos la cámara
+        LeanTween.move(mainCamera.gameObject, letterPositions[nextIndex].position, moveDuration)
+            .setEase(LeanTweenType.easeInOutCubic)
+            .setOnComplete(() =>
+            {
+                // Activamos el nuevo canvas cuando termina el movimiento
+                canvases[nextIndex].SetActive(true);
+                currentIndex = nextIndex;
+                isMoving = false;
+            });
     }
 }

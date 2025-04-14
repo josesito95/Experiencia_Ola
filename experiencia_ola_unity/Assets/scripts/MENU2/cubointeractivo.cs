@@ -21,7 +21,7 @@ public class CuboInteractivo : MonoBehaviour
         if (fueActivado) return;
 
         // Cambia el color del cubo para feedback
-        rend.material = materialEncendido;
+        // rend.material = CuboApagado;
 
         // Llama al administrador para prender la letra
         GameObject.FindObjectOfType<AdministradorLetras>().ActivarLetra(letra);

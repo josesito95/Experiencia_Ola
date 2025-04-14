@@ -41,6 +41,7 @@ public class AdministradorLetras : MonoBehaviour
         Renderer rend = letra.GetComponent<Renderer>();
         rend.material = materialEncendido;
         rend.material.EnableKeyword("_EMISSION");
-        rend.material.SetColor("_EmissionColor", Color.white * 1.5f);
+        rend.material.SetColor("_EmissionColor", new Color(242f / 255f, 103f / 255f, 73f / 255f) * 1f);
+
     }
 }
